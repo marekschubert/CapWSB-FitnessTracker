@@ -1,12 +1,17 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -25,14 +30,44 @@ class UserController {
                           .toList();
     }
 
-    @PostMapping
-    public User addUser(@RequestBody UserDto userDto) throws InterruptedException {
-
-        // Demonstracja how to use @RequestBody
-        System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
-
-        // TODO: saveUser with Service and return User
-        return null;
+    @GetMapping("/simple")
+    public List<UserSimpleDto> getAllUsersSimple() {
+        return userService.findAllUsers()
+                .stream()
+                .map(userMapper::toSimpleDto)
+                .toList();
     }
 
+    @GetMapping("/{id}")
+    public Optional<UserDto> GetUserById(@PathVariable("id") Long id){
+        return userService
+                .getUser(id)
+                .map(userMapper::toDto);
+    }
+
+    @GetMapping("/email")
+    public Optional<UserEmailDto> GetUsersByEmail(@RequestParam("email") String email){
+        return userService.getUserByEmail(email)
+                .map(userMapper::toEmailDto);
+    }
+
+    @GetMapping("/older/{time}")
+    public List<UserDto> GetUsersOlderThan(@RequestParam("time") LocalDate time){
+        return  userService.getUsersOlderThan(time)
+                .stream()
+                .map(userMapper::toDto)
+                .toList();
+    }
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
+        return userMapper.toDto(userService.createUser(userMapper.toEntity(userDto)));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+    }
 }

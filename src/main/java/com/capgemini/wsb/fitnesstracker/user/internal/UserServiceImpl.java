@@ -1,12 +1,14 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
 import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
 import com.capgemini.wsb.fitnesstracker.user.api.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +29,19 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
+    public void deleteUser(Long id) {
+        log.info("Creating User with Id: {}", id);
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public Optional<User> getUser(final Long userId) {
-        return userRepository.findById(userId);
+        var user = userRepository.findById(userId);
+
+        if(user.isEmpty()){
+            throw new UserNotFoundException(userId);
+        }
+        return user;
     }
 
     @Override
@@ -39,6 +52,11 @@ class UserServiceImpl implements UserService, UserProvider {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersOlderThan(LocalDate time){
+        return userRepository.findAllOlderThan(time);
     }
 
 }
