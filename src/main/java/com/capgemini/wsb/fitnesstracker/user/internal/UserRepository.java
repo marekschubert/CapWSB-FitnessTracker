@@ -23,6 +23,12 @@ interface UserRepository extends JpaRepository<User, Long> {
                         .findFirst();
     }
 
+    default List<User> findUsersByEmailPart(String email) {
+        return findAll().stream()
+                        .filter(user -> user.getEmail().toLowerCase().contains(email.toLowerCase()))
+                        .toList();
+    }
+
     default List<User> findAllOlderThan(LocalDate localDate) {
         return findAll()
                 .stream()

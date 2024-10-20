@@ -31,6 +31,19 @@ public interface UserProvider {
      */
     List<User> findAllUsers();
 
+    /**
+     * Retrieves users who are older than a given date.
+     *
+     * @param time The cutoff date for user age.
+     * @return A {@link List} of users whose age is older than the specified date.
+     */
     List<User> getUsersOlderThan(LocalDate time);
 
+    /**
+     * Retrieves users whose email contains the given substring.
+     *
+     * @param email The substring to search for within users' email addresses.
+     * @return A {@link List} of users whose email contains the specified part.
+     */
+    List<User> getUsersByEmailPart(String email);
 }

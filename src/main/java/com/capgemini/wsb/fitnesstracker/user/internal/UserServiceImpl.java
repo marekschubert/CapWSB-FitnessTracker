@@ -35,6 +35,17 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
+    public void updateUser(Long id, User user) {
+        var foundUser = userRepository.findById(id);
+        if(foundUser.isEmpty()){
+            throw new UserNotFoundException(id);
+        }
+
+        user.setId(id);
+        userRepository.save(user);
+    }
+
+    @Override
     public Optional<User> getUser(final Long userId) {
         var user = userRepository.findById(userId);
 
@@ -47,6 +58,11 @@ class UserServiceImpl implements UserService, UserProvider {
     @Override
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<User> getUsersByEmailPart(final String email) {
+        return userRepository.findUsersByEmailPart(email);
     }
 
     @Override

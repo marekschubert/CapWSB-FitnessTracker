@@ -46,13 +46,15 @@ class UserController {
     }
 
     @GetMapping("/email")
-    public Optional<UserEmailDto> GetUsersByEmail(@RequestParam("email") String email){
-        return userService.getUserByEmail(email)
-                .map(userMapper::toEmailDto);
+    public List<UserEmailDto> GetUsersByEmailPart(@RequestParam("email") String email){
+        return userService.getUsersByEmailPart(email)
+                .stream()
+                .map(userMapper::toEmailDto)
+                .toList();
     }
 
     @GetMapping("/older/{time}")
-    public List<UserDto> GetUsersOlderThan(@RequestParam("time") LocalDate time){
+    public List<UserDto> GetUsersOlderThan(@PathVariable("time") LocalDate time){
         return  userService.getUsersOlderThan(time)
                 .stream()
                 .map(userMapper::toDto)
@@ -69,5 +71,10 @@ class UserController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto){
+        userService.updateUser(id, userMapper.toEntity(userDto));
     }
 }

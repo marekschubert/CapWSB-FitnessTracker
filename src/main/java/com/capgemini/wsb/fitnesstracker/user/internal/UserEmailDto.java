@@ -5,6 +5,6 @@ import jakarta.annotation.Nullable;
 
 import java.time.LocalDate;
 
-record UserEmailDto(@Nullable Long Id, String email) {
+record UserEmailDto(@Nullable Long id, String email) {
 
 }
