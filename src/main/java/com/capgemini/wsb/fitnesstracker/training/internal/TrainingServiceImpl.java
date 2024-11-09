@@ -1,5 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
+import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingService;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
@@ -22,4 +23,38 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
         return trainingRepository.findAll();
     }
 
+    @Override
+    public List<Training> getUserTrainings(final Long userId) {
+        return trainingRepository.findUserTrainings(userId);
+    }
+
+    @Override
+    public List<Training> getAllByActivityType(ActivityType activityType) {
+        return  trainingRepository.findTrainingByActivityType(activityType);
+    }
+
+    @Override
+    public List<Training> getEndedTrainings(final Date afterTime) {
+        return trainingRepository.findEndedTrainings(afterTime);
+    }
+
+    @Override
+    public Training createTraining(final Training training) {
+        log.info("Creating Training {}", training);
+        if (training.getId() != null) {
+            throw new IllegalArgumentException("Training has already DB ID, update is not permitted!");
+        }
+        return trainingRepository.save(training);
+    }
+
+    @Override
+    public void updateTraining(Long id, Training training) {
+        var foundTraining = trainingRepository.findById(id);
+        if(foundTraining.isEmpty()){
+            throw new UserNotFoundException(id);
+        }
+
+        training.setId(id);
+        trainingRepository.save(training);
+    }
 }
