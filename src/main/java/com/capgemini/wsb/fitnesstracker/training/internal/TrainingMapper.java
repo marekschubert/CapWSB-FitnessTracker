@@ -4,9 +4,7 @@ import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.TrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
-import com.capgemini.wsb.fitnesstracker.user.api.User;
-import com.capgemini.wsb.fitnesstracker.user.internal.UserMapper;
-import org.hibernate.sql.Update;
+import com.capgemini.wsb.fitnesstracker.user.api.UserMapper;
 import org.springframework.stereotype.Component;
 
 @Component

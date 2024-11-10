@@ -1,11 +1,10 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
-import com.capgemini.wsb.fitnesstracker.user.api.User;
-import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
+import com.capgemini.wsb.fitnesstracker.user.api.dtos.UserDto;
+import com.capgemini.wsb.fitnesstracker.user.api.dtos.UserEmailDto;
+import com.capgemini.wsb.fitnesstracker.user.api.UserMapper;
+import com.capgemini.wsb.fitnesstracker.user.api.dtos.UserSimpleDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,7 +62,7 @@ class UserController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
+    public UserDto addUser(@RequestBody UserDto userDto) {
         return userMapper.toDto(userService.createUser(userMapper.toEntity(userDto)));
     }
 

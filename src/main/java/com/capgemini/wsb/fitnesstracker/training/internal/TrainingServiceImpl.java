@@ -4,7 +4,6 @@ import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingService;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
-import com.capgemini.wsb.fitnesstracker.training.internal.dtos.TrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
@@ -50,7 +49,7 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     public Training createTraining(final CreateTrainingDto createTrainingDto) {
         Optional<User> user = userProvider.getUser(createTrainingDto.getUserId());
         if(user.isEmpty()){
-            throw new IllegalArgumentException("User not found");
+            throw new UserNotFoundException(createTrainingDto.getUserId());
         }
 
         Training training = trainingMapper.toEntity(createTrainingDto);
@@ -63,7 +62,7 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     public Training updateTraining(Long id, UpdateTrainingDto updateTrainingDto) {
         Optional<User> user = userProvider.getUser(updateTrainingDto.getUserId());
         if(user.isEmpty()){
-            throw new IllegalArgumentException("User not found");
+            throw new UserNotFoundException(updateTrainingDto.getUserId());
         }
 
         Training training = trainingMapper.toEntity(updateTrainingDto);

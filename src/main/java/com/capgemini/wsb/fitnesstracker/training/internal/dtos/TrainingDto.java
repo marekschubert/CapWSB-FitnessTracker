@@ -1,7 +1,7 @@
 package com.capgemini.wsb.fitnesstracker.training.internal.dtos;
 
 import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
-import com.capgemini.wsb.fitnesstracker.user.internal.UserDto;
+import com.capgemini.wsb.fitnesstracker.user.api.dtos.UserDto;
 import lombok.Getter;
 
 import java.util.Date;
