@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "64421aa7-ffa6-43b5-851d-a5f47f96fc3f",
+		"name": "Java",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14603007"
+	},
+	"item": [
+		{
+			"name": "Lab3",
+			"item": [
+				{
+					"name": "GetUserTrainings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTrainings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEndedTrainings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings/finished/2024-01-18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings",
+								"finished",
+								"2024-01-18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByActivityType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings/activityType?activityType=RUNNING",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings",
+								"activityType"
+							],
+							"query": [
+								{
+									"key": "activityType",
+									"value": "RUNNING"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTraining",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"1\",\r\n    \"startTime\": \"2022-04-01T10:00:00\",\r\n    \"endTime\": \"2022-04-01T11:00:00\",\r\n    \"activityType\": \"TENNIS\",\r\n    \"distance\": 0.0,\r\n    \"averageSpeed\": 0.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTraining",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"1\",\r\n    \"startTime\": \"2022-04-01T10:00:00\",\r\n    \"endTime\": \"2022-04-01T11:00:00\",\r\n    \"activityType\": \"TENNIS\",\r\n    \"distance\": 0.0,\r\n    \"averageSpeed\": 0.0\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/v1/trainings/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"trainings",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
