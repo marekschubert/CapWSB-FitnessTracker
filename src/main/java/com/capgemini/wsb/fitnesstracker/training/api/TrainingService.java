@@ -1,19 +1,22 @@
 package com.capgemini.wsb.fitnesstracker.training.api;
 
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
+
 public interface TrainingService {
     /**
      * Creates a new training.
      *
-     * @param training The training to be created.
+     * @param createTrainingDto The training to be created.
      * @return The created {@link Training} instance.
      */
-    Training createTraining(Training training);
+    Training createTraining(CreateTrainingDto createTrainingDto);
 
     /**
      * Updates an existing training based on their ID.
      *
      * @param id   The ID of the training to be updated.
-     * @param training The updated training information.
+     * @param updateTrainingDto The updated training information.
      */
-    void updateTraining(Long id, Training training);
+    Training updateTraining(Long id, UpdateTrainingDto updateTrainingDto);
 }

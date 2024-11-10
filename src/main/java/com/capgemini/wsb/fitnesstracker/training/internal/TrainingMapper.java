@@ -1,8 +1,12 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
 import com.capgemini.wsb.fitnesstracker.training.api.Training;
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.TrainingDto;
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
+import com.capgemini.wsb.fitnesstracker.user.api.User;
 import com.capgemini.wsb.fitnesstracker.user.internal.UserMapper;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,15 +29,23 @@ public class TrainingMapper {
         );
     }
 
-    Training toEntity(TrainingDto trainingDto){
-        var user = userMapper.toEntity(trainingDto.getUser());
+    Training toEntity(CreateTrainingDto createTrainingDto){
+        return new Training(null,
+                createTrainingDto.getStartTime(),
+                createTrainingDto.getEndTime(),
+                createTrainingDto.getActivityType(),
+                createTrainingDto.getDistance(),
+                createTrainingDto.getAverageSpeed()
+        );
+    }
 
-        return new Training(user,
-                trainingDto.getStartTime(),
-                trainingDto.getEndTime(),
-                trainingDto.getActivityType(),
-                trainingDto.getDistance(),
-                trainingDto.getAverageSpeed()
+    Training toEntity(UpdateTrainingDto updateTrainingDto){
+        return new Training(null,
+                updateTrainingDto.getStartTime(),
+                updateTrainingDto.getEndTime(),
+                updateTrainingDto.getActivityType(),
+                updateTrainingDto.getDistance(),
+                updateTrainingDto.getAverageSpeed()
         );
     }
 

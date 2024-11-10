@@ -1,13 +1,19 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
 
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.TrainingDto;
+import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
+import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/trainings")
@@ -36,7 +42,7 @@ public class TrainingController {
     }
 
     @GetMapping("/finished/{afterTime}")
-    public List<TrainingDto> getEndedTrainings(@PathVariable("id") Date afterTime) {
+    public List<TrainingDto> getEndedTrainings(@PathVariable("afterTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date afterTime) {
         return service.getEndedTrainings(afterTime)
                 .stream()
                 .map(userMapper::toDto)
@@ -54,14 +60,13 @@ public class TrainingController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public TrainingDto addTraining(@RequestBody TrainingDto trainingDto) {
-
-        return userMapper.toDto(service.createTraining(userMapper.toEntity(trainingDto)));
+    public TrainingDto addTraining(@RequestBody CreateTrainingDto createTrainingDto) {
+        return userMapper.toDto(service.createTraining(createTrainingDto));
     }
 
     @PutMapping("/{id}")
-    public void updateTraining(@PathVariable("id") Long id, @RequestBody TrainingDto trainingDto){
-        service.updateTraining(id, userMapper.toEntity(trainingDto));
+    public TrainingDto updateTraining(@PathVariable("id") Long id, @RequestBody UpdateTrainingDto updateTrainingDto){
+        return userMapper.toDto(service.updateTraining(id, updateTrainingDto));
     }
 
 }
