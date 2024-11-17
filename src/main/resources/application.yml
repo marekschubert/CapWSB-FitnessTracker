@@ -13,6 +13,7 @@ spring:
     port:
     username:
     password:
+    from:
     properties:
       mail:
         smtp:

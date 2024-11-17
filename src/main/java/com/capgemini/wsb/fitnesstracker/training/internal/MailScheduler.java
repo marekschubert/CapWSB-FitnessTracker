@@ -6,6 +6,7 @@ import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,8 @@ public class MailScheduler {
     private final EmailSender emailSender;
     private final UserProvider userProvider;
     private final TrainingProvider trainingProvider;
+    @Value("${spring.mail.from}")
+    private String emailFrom;
 
     public MailScheduler(EmailSender emailSender, UserProvider userProvider, TrainingProvider trainingProvider) {
         this.emailSender = emailSender;
@@ -52,7 +55,7 @@ public class MailScheduler {
             textBuilder.append(GetTrainingText(training));
         }
 
-        emailSender.send(new EmailDto(recipient, subject, textBuilder.toString()));
+        emailSender.send(new EmailDto(recipient, emailFrom, subject, textBuilder.toString()));
     }
 
     private String GetTrainingText(Training training){

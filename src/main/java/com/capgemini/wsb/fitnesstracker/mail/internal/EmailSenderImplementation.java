@@ -18,6 +18,7 @@ public class EmailSenderImplementation implements EmailSender {
     @Override
     public void send(EmailDto email) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(email.from());
         message.setTo(email.toAddress());
         message.setSubject(email.subject());
         message.setText(email.content());
