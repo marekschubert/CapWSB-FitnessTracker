@@ -4,8 +4,6 @@ package com.capgemini.wsb.fitnesstracker.training.internal;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.CreateTrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.TrainingDto;
 import com.capgemini.wsb.fitnesstracker.training.internal.dtos.UpdateTrainingDto;
-import com.capgemini.wsb.fitnesstracker.user.api.User;
-import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Date;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/trainings")
