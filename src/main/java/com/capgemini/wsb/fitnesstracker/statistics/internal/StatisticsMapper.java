@@ -1,7 +1,9 @@
 package com.capgemini.wsb.fitnesstracker.statistics.internal;
 
 import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
+import com.capgemini.wsb.fitnesstracker.statistics.internal.dtos.CreateStatisticDto;
 import com.capgemini.wsb.fitnesstracker.statistics.internal.dtos.StatisticsDto;
+import com.capgemini.wsb.fitnesstracker.statistics.internal.dtos.UpdateStatisticsDto;
 import com.capgemini.wsb.fitnesstracker.user.api.UserMapper;
 import org.springframework.stereotype.Component;
 
@@ -27,5 +29,25 @@ public class StatisticsMapper {
         statisticsDto.setTotalCaloriesBurned(statistics.getTotalCaloriesBurned());
 
         return statisticsDto;
+    }
+
+    public Statistics toEntity(CreateStatisticDto createStatisticDto) {
+        var entity = new Statistics();
+
+        entity.setTotalDistance(createStatisticDto.getTotalDistance());
+        entity.setTotalTrainings(createStatisticDto.getTotalTrainings());
+        entity.setTotalCaloriesBurned(createStatisticDto.getTotalCaloriesBurned());
+
+        return entity;
+    }
+
+    public Statistics toEntity(UpdateStatisticsDto updateStatisticsDto) {
+        var entity = new Statistics();
+
+        entity.setTotalDistance(updateStatisticsDto.getTotalDistance());
+        entity.setTotalTrainings(updateStatisticsDto.getTotalTrainings());
+        entity.setTotalCaloriesBurned(updateStatisticsDto.getTotalCaloriesBurned());
+
+        return entity;
     }
 }

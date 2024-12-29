@@ -1,5 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.loader;
 
+import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
 import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
@@ -37,6 +38,9 @@ class InitialDataLoader {
     @Autowired
     private JpaRepository<Training, Long> trainingRepository;
 
+    @Autowired
+    private JpaRepository<Statistics, Long> statisticsRepository;
+
     @EventListener
     @Transactional
     @SuppressWarnings({"squid:S1854", "squid:S1481", "squid:S1192", "unused"})
@@ -47,6 +51,7 @@ class InitialDataLoader {
 
         List<User> sampleUserList = generateSampleUsers();
         List<Training> sampleTrainingList = generateTrainingData(sampleUserList);
+        List<Statistics> sampleStatisticsList = generateStatisticsData(sampleUserList);
 
 
         log.info("Finished loading initial data");
@@ -155,13 +160,45 @@ class InitialDataLoader {
             trainingData.add(training9);
             trainingData.add(training10);
 
-            trainingData.forEach(training -> trainingRepository.save(training));
+            trainingRepository.saveAll(trainingData);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         return trainingData;
     }
+
+    private List<Statistics> generateStatisticsData(List<User> sampleUserList) {
+        List<Statistics> statisticsData = new ArrayList<>();
+
+        Statistics statistics1 = new Statistics(sampleUserList.get(0), 10, 8.5, 120);
+        Statistics statistics2 = new Statistics(sampleUserList.get(1), 23, 15.0, 200);
+        Statistics statistics3 = new Statistics(sampleUserList.get(2), 5, 5.5, 80);
+        Statistics statistics4 = new Statistics(sampleUserList.get(3), 18, 9.0, 150);
+        Statistics statistics5 = new Statistics(sampleUserList.get(4), 250, 14.8, 220);
+        Statistics statistics6 = new Statistics(sampleUserList.get(5), 3, 4.0, 50);
+        Statistics statistics7 = new Statistics(sampleUserList.get(6), 31, 12.0, 250);
+        Statistics statistics8 = new Statistics(sampleUserList.get(6), 27, 11.5, 180);
+        Statistics statistics9 = new Statistics(sampleUserList.get(6), 4, 5.2, 60);
+        Statistics statistics10 = new Statistics(sampleUserList.get(6), 15, 8.2, 10);
+
+        statisticsData.add(statistics1);
+        statisticsData.add(statistics2);
+        statisticsData.add(statistics3);
+        statisticsData.add(statistics4);
+        statisticsData.add(statistics5);
+        statisticsData.add(statistics6);
+        statisticsData.add(statistics7);
+        statisticsData.add(statistics8);
+        statisticsData.add(statistics9);
+        statisticsData.add(statistics10);
+
+        statisticsRepository.saveAll(statisticsData);
+
+        return statisticsData;
+
+    }
+
     private void verifyDependenciesAutowired() {
         if (isNull(userRepository)) {
             throw new IllegalStateException("Initial data loader was not autowired correctly " + this);
