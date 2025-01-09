@@ -9,11 +9,11 @@ spring:
       enabled: true
 
   mail:
-    host:
-    port:
-    username:
-    password:
-    from:
+    host: "sandbox.smtp.mailtrap.io"
+    port: 465
+    username: "d5862e24a63004"
+    password: "38dab1396797c1"
+    from: "from@example.com"
     properties:
       mail:
         smtp:
